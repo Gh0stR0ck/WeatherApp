@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace WeatherApp.Interfaces.DtoDb
+namespace WeatherApp.Data.DtoDb
 {
     /// <summary>
     /// 

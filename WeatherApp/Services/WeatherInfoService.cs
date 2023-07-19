@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using WeatherApp.Interfaces.Services;
 using WeatherApp.Models;
 
 namespace WeatherApp.Services
@@ -6,7 +7,7 @@ namespace WeatherApp.Services
     /// <summary>
     /// 
     /// </summary>
-    public class WeatherInfoService
+    public class WeatherInfoService : IWeatherInfoService
     {
         /// <summary>
         /// 

@@ -1,4 +1,4 @@
-﻿using WeatherApp.Interfaces.DtoDb;
+﻿using WeatherApp.Data.DtoDb;
 
 namespace WeatherApp.Interfaces.Repositories
 {
@@ -11,19 +11,19 @@ namespace WeatherApp.Interfaces.Repositories
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<WeatherData> GetAllWeatherData();
+        public Task<IEnumerable<WeatherData>> GetAllWeatherData();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="datetime"></param>
         /// <returns></returns>
-        public WeatherData GetWeatherDataOnDateTime(DateTime datetime);
+        public Task<WeatherData> GetWeatherDataOnDateTime(DateTime datetime);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="weatherdata"></param>
-        public void AddWeatherData(WeatherData weatherdata);
+        public Task AddWeatherData(WeatherData weatherdata);
     }
 }

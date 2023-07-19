@@ -1,5 +1,5 @@
 ﻿using WeatherApp.Controllers;
-using WeatherApp.Interfaces.DtoDb;
+using WeatherApp.Data.DtoDb;
 using WeatherApp.Interfaces.Repositories;
 
 namespace WeatherApp.Data.Repositories
@@ -24,19 +24,19 @@ namespace WeatherApp.Data.Repositories
         }
 
         /// <inheritdoc/>
-        public IEnumerable<WeatherData> GetAllWeatherData()
+        public async Task<IEnumerable<WeatherData>> GetAllWeatherData()
         {
             return _weatherContext.WeatherData.ToList();
         }
 
         /// <inheritdoc/>
-        public WeatherData? GetWeatherDataOnDateTime(DateTime datetime)
+        public async Task<WeatherData?> GetWeatherDataOnDateTime(DateTime datetime)
         {
             return _weatherContext.WeatherData.First<WeatherData>(x => x.DateTime == datetime);
         }
 
         /// <inheritdoc/>
-        public void AddWeatherData(WeatherData weatherdata)
+        public async Task AddWeatherData(WeatherData weatherdata)
         {
             _weatherContext.WeatherData.Add(weatherdata);
             Save();

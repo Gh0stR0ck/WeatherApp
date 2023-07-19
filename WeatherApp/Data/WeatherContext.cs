@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WeatherApp.Interfaces.DtoDb;
+using WeatherApp.Data.DtoDb;
 
 namespace WeatherApp.Data
 {
@@ -24,7 +24,7 @@ namespace WeatherApp.Data
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WeatherData>().ToTable("WeatherData");
+            new DataSeeder(modelBuilder).WeatherData();
         }
     }
 }
