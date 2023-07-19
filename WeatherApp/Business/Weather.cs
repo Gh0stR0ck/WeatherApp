@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using WeatherApp.Data.DtoDb;
 using WeatherApp.Interfaces.Repositories;
 using WeatherApp.Interfaces.Services;
-using WeatherApp.Models;
 using WeatherApp.Services;
 
 namespace WeatherApp.Business

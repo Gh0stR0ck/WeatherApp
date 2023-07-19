@@ -8,7 +8,7 @@ namespace WeatherApp.Controllers
     /// 
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherController : ControllerBase
     {
         private readonly ILogger<WeatherController> _logger;
@@ -34,8 +34,8 @@ namespace WeatherApp.Controllers
         {
             try
             {
-                var result = _weather.CanWeLunchOutsideAsync();
-                return Ok(result.Result);
+                var result = await _weather.CanWeLunchOutsideAsync();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -50,12 +50,12 @@ namespace WeatherApp.Controllers
         /// <param name="dateTime"></param>
         /// <returns></returns>
         [HttpGet("GetWeatherDataOnDateTime")]
-        public ActionResult<string> GetWeather(DateTime dateTime)
+        public async Task<ActionResult<string>> GetWeatherAsync(DateTime dateTime)
         {
             try
             {
-                var result = _weather.GetWeather(dateTime);
-                return Ok(JsonSerializer.Serialize(result.Result));
+                var result = await _weather.GetWeather(dateTime);
+                return Ok(JsonSerializer.Serialize(result));
             }
             catch (Exception ex)
             {
@@ -69,12 +69,12 @@ namespace WeatherApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllWeatherData")]
-        public ActionResult<string> GetAllWeather()
+        public async Task<ActionResult<string>> GetAllWeather()
         {
             try
             {
-                var result = _weather.GetAllWeatherData();
-                return Ok(JsonSerializer.Serialize(result.Result));
+                var result = await _weather.GetAllWeatherData();
+                return Ok(JsonSerializer.Serialize(result));
             }
             catch (Exception ex)
             {
