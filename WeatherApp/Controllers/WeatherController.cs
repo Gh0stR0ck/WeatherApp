@@ -92,8 +92,8 @@ namespace WeatherApp.Controllers
         {
             try
             {
-                var result =  _weather.SaveCurrentWeatherInTheDatabase();
-                return Ok(JsonSerializer.Serialize(result.Result));
+                await _weather.SaveCurrentWeatherInTheDatabase();
+                return Ok();
             }
             catch (Exception ex)
             {

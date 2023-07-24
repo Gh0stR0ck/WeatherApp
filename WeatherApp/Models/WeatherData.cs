@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
-namespace WeatherApp.Data.DtoDb
+namespace WeatherApp.Models
 {
     /// <summary>
     /// 
@@ -12,7 +12,7 @@ namespace WeatherApp.Data.DtoDb
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int Temperature { get; set; }
         public int WindSpeed { get; set; }
         public int WindDirection { get; set; }

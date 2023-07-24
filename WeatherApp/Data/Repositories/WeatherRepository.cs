@@ -1,6 +1,7 @@
-﻿using WeatherApp.Controllers;
-using WeatherApp.Data.DtoDb;
+﻿using Microsoft.EntityFrameworkCore;
+using WeatherApp.Controllers;
 using WeatherApp.Interfaces.Repositories;
+using WeatherApp.Models;
 
 namespace WeatherApp.Data.Repositories
 {
@@ -26,28 +27,20 @@ namespace WeatherApp.Data.Repositories
         /// <inheritdoc/>
         public async Task<IEnumerable<WeatherData>> GetAllWeatherData()
         {
-            return _weatherContext.WeatherData.ToList();
+            return await _weatherContext.WeatherData.ToListAsync();
         }
 
         /// <inheritdoc/>
         public async Task<WeatherData?> GetWeatherDataOnDateTime(DateTime datetime)
         {
-            return _weatherContext.WeatherData.First<WeatherData>(x => x.DateTime == datetime);
+            return await _weatherContext.WeatherData.FirstOrDefaultAsync<WeatherData>(x => x.DateTime == datetime);
         }
 
         /// <inheritdoc/>
         public async Task AddWeatherData(WeatherData weatherdata)
         {
-            _weatherContext.WeatherData.Add(weatherdata);
-            Save();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Save()
-        {
-            _weatherContext.SaveChanges();
+            await _weatherContext.WeatherData.AddAsync(weatherdata);
+            await _weatherContext.SaveChangesAsync();
         }
     }
 }

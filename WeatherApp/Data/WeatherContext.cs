@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WeatherApp.Data.DtoDb;
+using WeatherApp.Models;
 
 namespace WeatherApp.Data
 {

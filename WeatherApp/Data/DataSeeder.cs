@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using WeatherApp.Data.DtoDb;
+using WeatherApp.Models;
 
 namespace WeatherApp.Data
 {

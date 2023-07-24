@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WeatherApp.Data.DtoDb;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Interfaces.Repositories;
 using WeatherApp.Interfaces.Services;
+using WeatherApp.Models;
 using WeatherApp.Services;
 
 namespace WeatherApp.Business
@@ -28,25 +29,14 @@ namespace WeatherApp.Business
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> CanWeLunchOutsideAsync()
-        {
-            var currentWeatherData = await _weatherInfoService.GetCurrentWeatherData();
-
-            if (int.Parse(currentWeatherData?.current_condition[0]?.FeelsLikeC) > 18) return true;
-
-            return false;
-        }
+        public async Task<bool> CanWeLunchOutsideAsync() => CheckNiceWeatherConditions(await _weatherInfoService.GetCurrentWeatherData());
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public async Task<WeatherData> GetWeather(DateTime dateTime)
-        {
-            var result = await _weatherRepository.GetWeatherDataOnDateTime(dateTime);
-            return result;
-        }
+        public async Task<WeatherData> GetWeather(DateTime dateTime) => await _weatherRepository.GetWeatherDataOnDateTime(dateTime);
 
         /// <summary>
         /// 
@@ -60,32 +50,20 @@ namespace WeatherApp.Business
         /// </summary>
         /// <returns></returns>
         [HttpGet("SaveCurrentWeatherInTheDatabase")]
-        public async Task<string> SaveCurrentWeatherInTheDatabase()
+        public async Task SaveCurrentWeatherInTheDatabase()
         {
-            try
-            {
-                WeatherInfoService weatherDataService = new WeatherInfoService();
-                var currentWeatherData = await weatherDataService.GetCurrentWeatherData();
+            var weatherData = await _weatherInfoService.GetCurrentWeatherData();
+            await _weatherRepository.AddWeatherData(weatherData);
+        }
 
-                var weatherData = new WeatherData
-                {
-                    Temperature = int.Parse(currentWeatherData?.current_condition[0]?.FeelsLikeC),
-                    WindSpeed = int.Parse(currentWeatherData?.current_condition[0]?.windspeedKmph),
-                    WindDirection = int.Parse(currentWeatherData?.current_condition[0]?.winddirDegree),
-                    Humidity = int.Parse(currentWeatherData?.current_condition[0]?.humidity),
-                    Cloud = int.Parse(currentWeatherData?.current_condition[0]?.cloudcover),
-                    DateTime = DateTime.Parse(currentWeatherData?.current_condition[0]?.localObsDateTime),
-                };
-
-                _weatherRepository.AddWeatherData(weatherData);
-
-                return "Saved succesfully";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return "Something went wrong.";
-            }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="weatherData"></param>
+        /// <returns></returns>
+        private bool CheckNiceWeatherConditions(WeatherData weatherData)
+        {
+            return (weatherData.Temperature > 18) ? true : false;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using WeatherApp.Data.DtoDb;
+﻿using WeatherApp.Models;
 
 namespace WeatherApp.Interfaces.Repositories
 {

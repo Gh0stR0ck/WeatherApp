@@ -1,17 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Moq;
 using WeatherApp.Business;
-using WeatherApp.Data;
-using WeatherApp.Data.DtoDb;
-using WeatherApp.Data.Repositories;
 using WeatherApp.Interfaces.Repositories;
 using WeatherApp.Interfaces.Services;
 using WeatherApp.Models;
-using WeatherApp.Services;
+using WeatherApp.Models.Dto;
 
 namespace WeatherAppTest.Business
 {
@@ -27,24 +19,19 @@ namespace WeatherAppTest.Business
             var weatherInfoService = new Mock<IWeatherInfoService>();
             var weather = new Weather(null,null, weatherInfoService.Object);
 
-            var weatherInfo = new WeatherInfo()
+            var weatherData = new WeatherData()
             {
-                current_condition = new CurrentCondition[]
-                {
-                    new CurrentCondition
-                    {
-                        FeelsLikeC = "20",
-                        windspeedKmph = "2000",
-                        winddirDegree = "20",
-                        humidity = "20",
-                        cloudcover = "20",
-                        localObsDateTime = "20"
-                    }
-                }
+                Id = 1,
+                Temperature = 20,
+                WindSpeed = 1,
+                WindDirection = 4,
+                Humidity = 5,
+                Cloud = 5,
+                DateTime = DateTime.Now
             };
 
 
-            weatherInfoService.Setup(x => x.GetCurrentWeatherData()).ReturnsAsync(weatherInfo);
+            weatherInfoService.Setup(x => x.GetCurrentWeatherData()).ReturnsAsync(weatherData);
 
             var result = weather.CanWeLunchOutsideAsync();
 
@@ -60,24 +47,20 @@ namespace WeatherAppTest.Business
             var weatherInfoService = new Mock<IWeatherInfoService>();
             var weather = new Weather(null, null, weatherInfoService.Object);
 
-            var weatherInfo = new WeatherInfo()
+
+            var weatherData = new WeatherData()
             {
-                current_condition = new CurrentCondition[]
-                {
-                    new CurrentCondition
-                    {
-                        FeelsLikeC = "8",
-                        windspeedKmph = "2000",
-                        winddirDegree = "20",
-                        humidity = "20",
-                        cloudcover = "20",
-                        localObsDateTime = "20"
-                    }
-                }
+                Id = 1,
+                Temperature = 2,
+                WindSpeed = 3000,
+                WindDirection = 999,
+                Humidity = 200,
+                Cloud = 0,
+                DateTime = DateTime.Now
             };
 
 
-            weatherInfoService.Setup(x => x.GetCurrentWeatherData()).ReturnsAsync(weatherInfo);
+            weatherInfoService.Setup(x => x.GetCurrentWeatherData()).ReturnsAsync(weatherData);
 
             var result = weather.CanWeLunchOutsideAsync();
 
